@@ -1,0 +1,26 @@
+@use './common';
+
+@mixin layout-message {
+  @include common.layout-block();
+
+  @layer {
+    & {
+      --_column-gap: var(--app-column-gap);
+    }
+  }
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  column-gap: var(--_column-gap);
+
+  font-size: xx-large;
+  font-weight: 600;
+
+  margin-top: 64px;
+
+  & > i {
+    font-size: xx-large;
+  }
+}

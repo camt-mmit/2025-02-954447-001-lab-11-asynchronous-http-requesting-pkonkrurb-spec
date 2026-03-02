@@ -1,0 +1,15 @@
+@use '../../scss/page';
+@use '../../scss/message';
+@use '../../scss/status';
+
+:host {
+  @include page.set-host-header();
+}
+
+._page-navigation {
+  @include page.set-navigation();
+}
+
+._error-message {
+  @include message.layout-message();
+}

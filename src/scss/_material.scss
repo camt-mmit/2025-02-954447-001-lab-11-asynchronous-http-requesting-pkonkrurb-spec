@@ -1,0 +1,36 @@
+@use 'sass:string';
+
+@function appearance($FILL: 0, $wght: 400, $GRAD: 0, $opsz: 24) {
+  @return "'FILL' #{$FILL}, 'wght' #{$wght}, 'GRAD' #{$GRAD}, 'opsz' #{$opsz}";
+}
+
+@mixin set-symbol() {
+  @layer {
+    & {
+      --_icon-variantion: var(--app-icon-variation);
+    }
+  }
+
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+
+  -webkit-font-feature-settings: 'liga';
+  -moz-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: antialiased;
+  text-rendering: optimizeLegibility;
+
+  font-variation-settings: var(--_icon-variantion);
+}

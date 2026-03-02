@@ -1,0 +1,50 @@
+@use './common';
+
+@mixin set-navigation() {
+  @layer {
+    & {
+      --_warn-color: var(--app-warn-color);
+      --_column-gap: var(--app-column-gap);
+    }
+  }
+
+  @include common.layout-block();
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  column-gap: var(--_column-gap);
+}
+
+@mixin set-search-fieldset() {
+  @include common.layout-block();
+
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+
+  & > input {
+    flex: 1 0 auto;
+  }
+}
+
+@mixin set-host-header {
+  @include common.layout-block();
+
+  @layer {
+    & {
+      --_column-gap: var(--app-column-gap);
+      --_row-gap: var(--app-row-gap);
+    }
+  }
+
+  & > header {
+    @include common.layout-block();
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    row-gap: var(--_row-gap);
+  }
+}
