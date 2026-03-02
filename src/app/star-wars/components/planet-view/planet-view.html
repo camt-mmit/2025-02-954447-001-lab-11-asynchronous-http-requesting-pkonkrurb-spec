@@ -30,16 +30,16 @@
   <dt>Residents</dt>
   <dd>
     @if (residentsResource.hasValue()) {
-       <ul>
+      <ul>
         @for (resident of residentsResource.value(); track resident) {
           <li>
-      <a
-        [routerLink]="['people', resident.url | extractId]"
-        [relativeTo]="moduleRoute()"
-        class="app-cmp-link"
-        >{{ resident.name }}</a
-      >
-      </li>
+            <a
+              [routerLink]="['people', resident.url | extractId]"
+              [relativeTo]="moduleRoute()"
+              class="app-cmp-link"
+              >{{ resident.name }}</a
+            >
+          </li>
         }
       </ul>
     } @else if (residentsResource.error(); as error) {
@@ -49,7 +49,7 @@
     }
   </dd>
 
-  <dt>Planets</dt>
+  <dt>Films</dt>
   <dd>
     @if (filmsResource.hasValue()) {
       <ul>
