@@ -20,4 +20,8 @@ describe('PlanetViewPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+
+
+}
+
+  );

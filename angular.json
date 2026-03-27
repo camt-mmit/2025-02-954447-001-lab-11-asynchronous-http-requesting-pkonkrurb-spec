@@ -3,13 +3,11 @@
   "version": 1,
   "cli": {
     "packageManager": "yarn",
-    "schematicCollections": [
-      "angular-eslint"
-    ]
+    "schematicCollections": ["angular-eslint"]
   },
   "newProjectRoot": "projects",
   "projects": {
-    "week-11": {
+    "lab-13": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -33,9 +31,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ]
+            "styles": ["src/styles.scss"]
           },
           "configurations": {
             "production": {
@@ -65,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "week-11:build:production"
+              "buildTarget": "lab-13:build:production"
             },
             "development": {
-              "buildTarget": "week-11:build:development"
+              "buildTarget": "lab-13:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,14 +75,8 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
-        },
-        "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }

@@ -1,56 +1,50 @@
 <header>
   <form (submit)="$event.preventDefault()" (submit)="onSearch()">
-    <fieldset [disabled]="form().disabled()" class="_search-fieldset">
-      <input type="text" [formField]="form.search" placeholder="Search" aria-label="Search" />
+    <fieldset [disabled]="form().disabled()">
+      <!-- Form can not disabled on some browser -->
+      <input type="text" [formField]="form.search" placeholder="Search" />
 
-      <button type="button" class="app-cmp-button app-cl-warn" (click)="clearSearch()">
-        <i class="material-symbols-outlined">close</i>
-      </button>
+      <button type="button" (click)="clearSearch()">X</button>
     </fieldset>
   </form>
 
-  <nav class="_page-navigation">
+  <nav>
+    @if (resource.hasValue()) {
+      <span>
+        <b>No. of Items:</b>
+        <span>{{ resource.value().count | number }}</span>
+      </span>
+    } @else if (resource.isLoading()) {
+      <p>Loading</p>
+    } @else if (resource.error(); as error) {
+      <p>Error!</p>
+    }
     <span>
-      @if (resource.hasValue()) {
-        <b>No. of items: </b
-        ><span class="app-cl-number">{{ resource.value().count | number }}</span>
-      } @else if (resource.error()) {
-        <b class="_status-warning">Error</b>
-      } @else if (resource.isLoading()) {
-        <b class="_status-loading">Loading</b>
-      }
-      <b> | Page: </b><span class="app-cl-number">{{ currentPage() | number }}</span>
+      <b> Page : </b>
+      <span>{{ currentPage() }}</span>
     </span>
-
-    <ul class="app-cmp-nav">
+    <ul>
       <li>
         <a
           [routerLink]="previousPage() ? [] : null"
-          [queryParams]="previousPage() === '1' ? { page: null } : { page: previousPage() }"
+          [queryParams]="{ page: previousPage() }"
           queryParamsHandling="merge"
-          replaceUrl
-          aria-label="Previous Page"
+          >&lt;</a
         >
-          <i class="material-symbols-outlined">chevron_backward</i>
-        </a>
       </li>
       <li>
         <a
           [routerLink]="nextPage() ? [] : null"
           [queryParams]="{ page: nextPage() }"
           queryParamsHandling="merge"
-          replaceUrl
-          aria-label="Next Page"
+          >&gt;</a
         >
-          <i class="material-symbols-outlined">chevron_forward</i>
-        </a>
       </li>
     </ul>
   </nav>
 </header>
-
 @if (resource.hasValue()) {
-  <app-films-list [data]="resource.value().results" />
+  <app-films-list [data]="resource.value().results"></app-films-list>
 } @else if (resource.error(); as error) {
-  <p class="_error-message">{{ error.message }}</p>
+  <p>{{ error.message }}</p>
 }

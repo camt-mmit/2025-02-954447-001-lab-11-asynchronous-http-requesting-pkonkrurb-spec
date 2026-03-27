@@ -1,17 +1,43 @@
-@use '../../scss/common';
-@use '../../scss/data';
-@use '../../scss/status';
+._data-view {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 14px 24px;
+  background: var(--glass-bg);
+  border: var(--border-sakura);
+  border-radius: var(--radius-card);
+  padding: 28px 32px;
+  backdrop-filter: blur(14px);
+  margin-top: 20px;
+  animation: cometSlide 0.45s var(--ease-smooth) both;
 
-:host {
-  @include common.layout-block();
+  dt {
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    align-self: center;
+    &::before { content: '✦ '; color: var(--c-sakura); font-size: 0.6rem; }
+  }
 
-  @layer {
-    & {
-      --_warn-color: var(--app-warn-color);
-    }
+  dd {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  hr {
+    grid-column: 1 / -1;
+    border: none;
+    border-top: var(--border-dim);
+    margin: 4px 0;
   }
 }
 
-._data-view {
-  @include data.layout-data-view();
+.app-cmp-link {
+  color: var(--c-indigo-light);
+  text-decoration: none;
+  transition: color var(--t-fast), text-shadow var(--t-fast);
+  &:hover { color: var(--c-sakura-light); text-shadow: 0 0 8px rgba(232,130,156,0.5); }
 }

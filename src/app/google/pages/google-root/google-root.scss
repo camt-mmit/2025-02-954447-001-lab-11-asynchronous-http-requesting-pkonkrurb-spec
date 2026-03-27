@@ -1,0 +1,171 @@
+/* Google Root — Sakura Meteor */
+._page-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  flex-direction: column;
+  gap: 20px;
+}
+
+nav {
+  background: linear-gradient(135deg, rgba(14,12,30,0.95), rgba(22,18,46,0.92));
+  backdrop-filter: blur(18px);
+  border-bottom: var(--border-sakura);
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--c-sakura), var(--c-indigo), var(--c-sakura), transparent);
+    background-size: 200% 100%;
+    animation: auroraShimmer 5s ease-in-out infinite;
+    opacity: 0.5;
+  }
+}
+
+.app-cmp-nav {
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  margin: 0; padding: 0;
+  min-height: 56px;
+  align-items: center;
+
+  li {
+    padding: 0;
+    border-bottom: none;
+    transition: none;
+
+    a {
+      text-decoration: none;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-ui);
+      font-weight: 600;
+      font-size: 0.80rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      transition: all var(--t-mid) var(--ease-smooth);
+
+      i { font-size: 16px; }
+
+      &:hover {
+        color: var(--text-primary);
+        background: rgba(232,130,156,0.10);
+        border-color: rgba(232,130,156,0.25);
+        text-shadow: 0 0 9px rgba(232,130,156,0.5);
+      }
+    }
+
+    &.app-st-active a {
+      color: var(--c-sakura-light);
+      background: rgba(232,130,156,0.13);
+      border-color: rgba(232,130,156,0.38);
+      text-shadow: 0 0 12px rgba(232,130,156,0.6);
+      box-shadow: var(--glow-sakura);
+    }
+  }
+}
+
+._google-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: var(--glass-bg);
+  border: var(--border-indigo);
+  border-radius: var(--radius-pill);
+  width: fit-content;
+  margin: 14px 16px 14px auto;
+  backdrop-filter: blur(12px);
+  animation: cometSlide 0.4s var(--ease-smooth) both;
+}
+
+._avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(232,130,156,0.35);
+}
+
+._google-bar span {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.app-cmp-button { }
+.app-cl-warn { }
+
+._status-loading {
+  color: var(--c-sakura-light);
+  font-family: var(--font-ui);
+  letter-spacing: 0.05em;
+  animation: twinkle 1.5s ease-in-out infinite;
+  &::after { content: '…'; }
+}
+
+/* Google Sign-in button */
+.gsi-material-button {
+  background: var(--glass-bg);
+  border: var(--border-sakura);
+  border-radius: 24px;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  font-weight: 600;
+  height: 48px;
+  outline: none;
+  overflow: hidden;
+  padding: 0 24px;
+  position: relative;
+  transition: all var(--t-mid) var(--ease-smooth);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--glow-sakura);
+  margin: auto;
+
+  &:hover {
+    background: rgba(232,130,156,0.14);
+    border-color: rgba(232,130,156,0.55);
+    box-shadow: 0 6px 22px rgba(232,130,156,0.40);
+    transform: translateY(-2px);
+  }
+
+  &:active { transform: translateY(0); }
+}
+
+.gsi-material-button-content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 12px;
+}
+
+.gsi-material-button-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.gsi-material-button-contents {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+svg { filter: drop-shadow(0 0 2px rgba(255,255,255,0.15)); }

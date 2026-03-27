@@ -1,0 +1,50 @@
+/* Person View — Sakura data card */
+._data-view {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 14px 24px;
+  background: var(--glass-bg);
+  border: var(--border-sakura);
+  border-radius: var(--radius-card);
+  padding: 28px 32px;
+  backdrop-filter: blur(14px);
+  margin-top: 20px;
+  animation: cometSlide 0.45s var(--ease-smooth) both;
+
+  dt {
+    color: var(--text-muted);
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    align-self: center;
+
+    &::before {
+      content: '✦ ';
+      color: var(--c-sakura);
+      font-size: 0.6rem;
+    }
+  }
+
+  dd {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  hr {
+    grid-column: 1 / -1;
+    border: none;
+    border-top: 1px solid rgba(124,111,205,0.15);
+    margin: 4px 0;
+  }
+}
+
+.app-cmp-link {
+  color: var(--c-indigo-light);
+  text-decoration: none;
+  transition: color var(--t-fast), text-shadow var(--t-fast);
+  &:hover { color: var(--c-sakura-light); text-shadow: 0 0 8px rgba(232,130,156,0.5); }
+}

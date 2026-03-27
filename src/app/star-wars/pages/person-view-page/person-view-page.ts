@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { PersonView } from '../../components/person-view/person-view';
 import { personResource } from '../../helpers';
-import { ModuleActivatedRoute } from '../../tokens';
+import { ModuleRoute } from '../../tokens';
 
 @Component({
   selector: 'app-person-view-page',
@@ -14,7 +14,7 @@ import { ModuleActivatedRoute } from '../../tokens';
 export class PersonViewPage {
   readonly id = input.required<string>();
 
-  protected moduleRoute = inject(ModuleActivatedRoute);
+  protected moduleRoute = inject(ModuleRoute);
 
   protected readonly resource = personResource(this.id).asReadonly();
 

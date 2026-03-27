@@ -1,15 +1,61 @@
-@use '../../scss/common';
-@use '../../scss/message';
-@use '../../scss/data';
-
+/* Planets List — Sakura grid */
 :host {
-  @include common.layout-block();
-}
-
-._empty-message {
-  @include message.layout-message();
+  display: block;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 ._data-list {
-  @include data.layout-data-list();
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  animation: fadeUp 0.5s var(--ease-smooth) both;
+
+  li {
+    background: var(--glass-bg);
+    border: var(--border-indigo);
+    border-radius: var(--radius-card);
+    backdrop-filter: blur(10px);
+    transition: all var(--t-mid) var(--ease-smooth);
+
+    @for $i from 1 through 30 {
+      &:nth-child(#{$i}) { animation: cometSlide 0.4s var(--ease-smooth) #{$i * 0.04}s both; }
+    }
+
+    &:hover {
+      background: rgba(124,111,205,0.12);
+      border-color: rgba(124,111,205,0.40);
+      box-shadow: var(--glow-indigo);
+      transform: translateY(-4px);
+    }
+
+    a {
+      display: block;
+      padding: 22px 20px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 0.04em;
+
+      &::before {
+        content: '🪐 ';
+        filter: drop-shadow(0 0 4px rgba(124,111,205,0.5));
+      }
+    }
+  }
+}
+
+._empty-message {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 1rem;
+  padding: 48px 24px;
+  border-radius: var(--radius-card);
+  border: var(--border-dim);
+  font-style: italic;
 }

@@ -1,25 +1,25 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { ModuleActivatedRoute } from '../../tokens';
-import { planetResource } from '../../helpers';
-import { PlanetView } from '../../components/planet-view/planet-view';
+import { ModuleRoute } from '../../tokens';
+import { planetsResource } from '../../helpers';
+import { PlanetsView } from '../../components/planet-view/planet-view';
 import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-planet-view-page',
-  imports: [PlanetView],
+  imports: [PlanetsView],
   templateUrl: './planet-view-page.html',
   styleUrl: './planet-view-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlanetViewPage {
   readonly id = input.required<string>();
-  protected moduleRoute = inject(ModuleActivatedRoute);
 
-    protected readonly resource = planetResource(this.id).asReadonly();
+  protected readonly moduleRoute = inject(ModuleRoute);
 
-  private readonly location = inject(Location);
+  readonly dataResource = planetsResource(() => this.id());
+private readonly location = inject(Location); // inject service เข้ามา
 
-  protected goBack(): void {
+ protected goBack(): void {
     this.location.back();
-}
+  }
 }

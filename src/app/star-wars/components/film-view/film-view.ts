@@ -1,71 +1,40 @@
-import { ChangeDetectionStrategy, Component,  effect, input, Resource, resource } from '@angular/core';
-import { ExtractIdPipe } from '../../pipes/extract-id-pipe';
+import { ChangeDetectionStrategy, Component,  input, resource } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Film, Person, Planet } from '../../types';
+import { ExtractIdPipe } from '../../pipes/extract-id-pipe';
+import { films, Person, Planet } from '../../types';
 import { fetchResource } from '../../helpers';
-import { httpResource } from '@angular/common/http';
-import { createManagedMetadataKey, FieldContext } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-film-view',
-  imports: [RouterLink, DatePipe, ExtractIdPipe],
+  standalone: true,
+  imports: [RouterLink, ExtractIdPipe, DatePipe],
   templateUrl: './film-view.html',
   styleUrl: './film-view.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilmView {
-  readonly data = input.required<Film>();
-  readonly moduleRoute = input.required<ActivatedRoute>();
+  readonly data = input.required<films>();
 
+  // ดึงข้อมูลตัวละคร (Characters) ทั้งหมดในเรื่อง [cite: 48, 57]
   protected readonly charactersResource = resource({
     params: () => this.data().characters,
-    loader: async ({ params, abortSignal }) =>
-      await Promise.all(params.map(async (url) => await fetchResource<Person>(url, abortSignal))),
+    loader: async ({ params, abortSignal }) => {
+      if (!params || params.length === 0) return [];
+      return await Promise.all(
+        params.map(async (url) => await fetchResource<Person>(url, abortSignal))
+      );
+    },
   }).asReadonly();
 
-    protected readonly charactersResourceKey = createManagedMetadataKey<
-    Resource<Person | undefined>,
-    FieldContext<string>
-    // memmory leak is possible if the field is removed from the form, but in this case we know that it won't happen
-  >((ctx) => {
-    const resource = httpResource<Person>(() => ctx()!.value());
-
-    const guardEffectRef = effect((onCleanup) => {
-      ctx()!.fieldTree();
-
-      onCleanup(() => {
-        guardEffectRef.destroy();
-        resource.destroy();
-      });
-    });
-
-    return resource.asReadonly();
-  });
-
+  // ดึงข้อมูลดาวเคราะห์ (Planets) ที่ปรากฏในเรื่อง [cite: 67, 76]
   protected readonly planetsResource = resource({
     params: () => this.data().planets,
-    loader: async ({ params, abortSignal }) =>
-      await Promise.all(params.map(async (url) => await fetchResource<Planet>(url, abortSignal))),
+    loader: async ({ params, abortSignal }) => {
+      if (!params || params.length === 0) return [];
+      return await Promise.all(
+        params.map(async (url) => await fetchResource<Planet>(url, abortSignal))
+      );
+    },
   }).asReadonly();
-
-  protected readonly planetsResourceKey = createManagedMetadataKey<
-    Resource<Planet | undefined>,
-    FieldContext<string>
-    // memmory leak is possible if the field is removed from the form, but in this case we know that it won't happen
-  >((ctx) => {
-    const resource = httpResource<Planet>(() => ctx()!.value());
-
-    const guardEffectRef = effect((onCleanup) => {
-      ctx()!.fieldTree();
-
-      onCleanup(() => {
-        guardEffectRef.destroy();
-        resource.destroy();
-      });
-    });
-
-    return resource.asReadonly();
-  });
-
 }

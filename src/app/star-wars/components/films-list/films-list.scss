@@ -1,15 +1,60 @@
-@use '../../scss/common';
-@use '../../scss/message';
-@use '../../scss/data';
+/* Films List — Sakura table */
+table {
+  width: 100%;
+  max-width: 960px;
+  margin: 24px auto;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  animation: fadeUp 0.5s var(--ease-smooth) both;
 
-:host {
-  @include common.layout-block();
+  thead tr th {
+    padding: 12px 18px;
+    color: var(--text-muted);
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    border-bottom: 1px solid rgba(124,111,205,0.30);
+  }
+
+  tbody tr {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    transition: all var(--t-mid) var(--ease-smooth);
+
+    td:first-child { border-radius: 10px 0 0 10px; }
+    td:last-child  { border-radius: 0 10px 10px 0; }
+
+    td {
+      padding: 16px 18px;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      border-top: var(--border-dim);
+      border-bottom: var(--border-dim);
+
+      a {
+        color: var(--c-sakura-light);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color var(--t-fast), text-shadow var(--t-fast);
+        &:hover { color: var(--c-comet); text-shadow: 0 0 10px rgba(245,184,204,0.7); }
+      }
+    }
+
+    &:hover {
+      background: rgba(124,111,205,0.10);
+      transform: scale(1.005);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+
+      td { border-color: rgba(124,111,205,0.25); }
+    }
+  }
 }
 
-._empty-message {
-  @include message.layout-message();
-}
-
-._data-list {
-  @include data.layout-data-list();
+th:nth-child(2), td:nth-child(2) {
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  color: var(--c-violet-glow);
 }

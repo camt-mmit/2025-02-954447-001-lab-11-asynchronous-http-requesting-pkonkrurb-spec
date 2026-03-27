@@ -1,73 +1,72 @@
-<hr />
-<dl class="_data-view">
-  <dt>Title</dt>
-  <dd>{{ data().title }}</dd>
+<div class="film-container">
+  <div class="info-group">
+    <span class="label">Title</span>
+    <span class="value">{{ data().title }} <i class="material-symbols-outlined small">open_in_new</i></span>
+  </div>
 
-  <dt>Episode</dt>
-  <dd>{{ data().episode_id }}</dd>
+  <div class="info-group">
+    <span class="label">Episode ID</span>
+    <span class="value">{{ data().episode_id }}</span>
+  </div>
 
-  <dt>Opening Crawl</dt>
-  <dd>{{ data().opening_crawl }}</dd>
+  <div class="info-group">
+    <span class="label">Opening Crawl</span>
+    <pre class="value crawl-text">{{ data().opening_crawl }}</pre>
+  </div>
 
-  <dt>Director</dt>
-  <dd>{{ data().director }}</dd>
+  <div class="info-group">
+    <span class="label">Director</span>
+    <span class="value">{{ data().director }}</span>
+  </div>
 
-  <dt>Producer</dt>
-  <dd>{{ data().producer }}</dd>
+  <div class="info-group">
+    <span class="label">Producer</span>
+    <span class="value">{{ data().producer }}</span>
+  </div>
 
-  <dt>Release Date</dt>
-  <dd>{{ data().release_date }}</dd>
+  <div class="info-group">
+    <span class="label">Release Date</span>
+    <span class="value">{{ data().release_date | date: 'MMM dd, yyyy' }}</span>
+  </div>
 
-  <dt>Characters</dt>
-  <dd>
-    @if (charactersResource.hasValue()) {
-       <ul>
-        @for (character of charactersResource.value(); track character) {
-          <li>
-      <a
-        [routerLink]="['people', character.url | extractId]"
-        [relativeTo]="moduleRoute()"
-        class="app-cmp-link"
-        >{{ character.name }}</a
-      >
-      </li>
-        }
-      </ul>
-    } @else if (charactersResource.error(); as error) {
-      <span class="_status-warning">{{ error.message }}</span>
-    } @else if (charactersResource.isLoading()) {
-      <span class="_status-loading">Loading</span>
-    }
-  </dd>
+  <div class="info-group">
+    <span class="label">Characters</span>
+    <div class="value list-content">
+      @if (charactersResource.isLoading()) { <span>Loading characters...</span> }
+      @else {
+        <ul>
+          @for (person of charactersResource.value(); track person.url) {
+            <li>
+              <a [routerLink]="['/star-wars/people', person.url | extractId]">
+                {{ person.name }} <i class="material-symbols-outlined x-small">link</i>
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
 
-  <dt>Planets</dt>
-  <dd>
-    @if (planetsResource.hasValue()) {
-      <ul>
-        @for (planet of planetsResource.value(); track planet) {
-          <li>
-            <a
-              [routerLink]="['planets', planet.url | extractId]"
-              [relativeTo]="moduleRoute()"
-              class="app-cmp-link"
-              >{{ planet.name }}</a
-            >
-          </li>
-        }
-      </ul>
-    } @else if (planetsResource.error(); as error) {
-      <span class="_status-warning">{{ error.message }}</span>
-    } @else if (planetsResource.isLoading()) {
-      <span class="_status-loading">Loading</span>
-    }
-  </dd>
+  <div class="info-group">
+    <span class="label">Planets</span>
+    <div class="value list-content">
+      @if (planetsResource.isLoading()) { <span>Loading planets...</span> }
+      @else {
+        <ul>
+          @for (planet of planetsResource.value(); track planet.url) {
+            <li>
+              <a [routerLink]="['/star-wars/planets', planet.url | extractId]">
+                {{ planet.name }} <i class="material-symbols-outlined x-small">link</i>
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
 
-  <dt>Created</dt>
-  <dd>{{ data().created | date }}</dd>
-
-  <dt>Edited</dt>
-  <dd>{{ data().edited | date }}</dd>
-</dl>
-<hr />
-
-+
+  <div class="info-group footer-info">
+    <div><strong>Created</strong> {{ data().created | date: 'MMM dd, yyyy' }}</div>
+    <div><strong>Edited</strong> {{ data().edited | date: 'MMM dd, yyyy' }}</div>
+  </div>
+</div>

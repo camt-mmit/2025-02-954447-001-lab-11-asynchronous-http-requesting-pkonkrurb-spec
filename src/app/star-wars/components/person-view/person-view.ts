@@ -20,7 +20,7 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { fetchResource } from '../../helpers';
 import { ExtractIdPipe } from '../../pipes/extract-id-pipe';
-import { Film, Person, Planet } from '../../types';
+import { films, Person, Planet } from '../../types';
 
 @Component({
   selector: 'app-person-view',
@@ -33,31 +33,44 @@ export class PersonView {
   readonly data = input.required<Person>();
   readonly moduleRoute = input.required<ActivatedRoute>();
 
+/**
+   * ข้อมูลแบบ Observable/Promise
+   * ใช้ computed เพื่อสร้าง object ที่เก็บผลลัพธ์การดึงข้อมูลดาว (homeworld)
+   * และรายการหนัง (films) โดยเรียกใช้ helper fetchResource
+   */
   protected readonly asyncData = computed(() => {
     const { homeworld, films } = this.data();
 
     return {
       homeworld$: fetchResource<Planet>(homeworld),
-      films: films.map((url) => fetchResource<Film>(url)),
+      films: films.map((url) => fetchResource<films>(url)),
     } as const;
   });
 
+/**
+   * ทรัพยากรข้อมูลดาวบ้านเกิด (Homeworld)
+   * ใช้ httpResource (Angular 19+) เพื่อดึงข้อมูล Planet จาก URL อัตโนมัติ
+   * เมื่อค่า homeworld ใน data เปลี่ยนแปลง
+   */
   protected readonly homeworldResource = httpResource<Planet>(
     () => this.data().homeworld ?? undefined,
   ).asReadonly();
+/**
+   * ทรัพยากรรายการภาพยนตร์ (Films List)**/
 
   protected readonly filmsResource = resource({
     params: () => this.data().films,
     loader: async ({ params, abortSignal }) =>
-      await Promise.all(params.map(async (url) => await fetchResource<Film>(url, abortSignal))),
+      await Promise.all(params.map(async (url) => await fetchResource<films>(url, abortSignal))),
   }).asReadonly();
+/**
+   * กุญแจสำหรับจัดการ Metadata ของหนังแต่ละเรื่อง**/
 
   protected readonly filmResourceKey = createManagedMetadataKey<
-    Resource<Film | undefined>,
+    Resource<films | undefined>,
     FieldContext<string>
-    // memmory leak is possible if the field is removed from the form, but in this case we know that it won't happen
   >((ctx) => {
-    const resource = httpResource<Film>(() => ctx()!.value());
+    const resource = httpResource<films>(() => ctx()!.value());
 
     const guardEffectRef = effect((onCleanup) => {
       ctx()!.fieldTree();
@@ -70,7 +83,11 @@ export class PersonView {
 
     return resource.asReadonly();
   });
-
+/**
+   * ฟอร์มรายการภาพยนตร์ (Dynamic Films Form)
+   * ใช้ form() ร่วมกับ linkedSignal เพื่อซิงค์ข้อมูลหนังจาก Input
+   * และมีการใช้ applyEach เพื่อผูก filmResourceKey เข้ากับหนังทุกเรื่องในรายการ
+   */
   protected readonly filmsForm = form(
     linkedSignal(() => this.data().films),
     (path) => {

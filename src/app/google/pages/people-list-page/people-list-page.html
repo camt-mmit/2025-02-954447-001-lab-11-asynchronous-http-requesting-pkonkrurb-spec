@@ -1,0 +1,71 @@
+<header>
+  <nav>
+    <ul class="app-cmp-nav app-cl-filled _action-links">
+      <li>
+        <a routerLink="create">
+          <i class="material-symbols-outlined">person_add</i>
+          Contact
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <form (submit)="$event.preventDefault()" (submit)="onSearch()">
+    <fieldset [disabled]="form().disabled()" class="_search-fieldset">
+      <input type="text" [formField]="form.q" placeholder="Search" aria-label="Search" />
+      <button type="button" class="app-cmp-button app-cl-warn" (click)="clearSearch()">
+        <i class="material-symbols-outlined">close</i>
+      </button>
+    </fieldset>
+  </form>
+</header>
+
+@if (resource.isLoading()) {
+  <p class="_status-container">
+    <b class="_status-loading">Loading</b>
+  </p>
+} @else if (resource.error(); as error) {
+  <p class="_error-container">
+    <b class="_status-warning">{{ error.message }}</b>
+  </p>
+} @else {
+  @for (person of filteredConnections(); track person.resourceName) {
+    <details class="_person-row">
+      <summary class="_person-summary">
+        <span class="_avatar">
+          @if (getPhotoUrl(person); as url) {
+            <img [src]="url" [alt]="getDisplayName(person)" class="_avatar-img" />
+          } @else {
+            <span class="_avatar-initials">{{ getInitials(person) }}</span>
+          }
+        </span>
+        <span class="_person-name">{{ getDisplayName(person) }}</span>
+      </summary>
+
+      <div class="_person-detail">
+        @if (person.emailAddresses && person.emailAddresses.length > 0) {
+          <p class="_detail-label">Emails</p>
+          @for (email of person.emailAddresses; track email.value) {
+            <p class="_detail-item">
+              <span class="_detail-type">{{ email.type }}:</span>
+              {{ email.value }}
+            </p>
+          }
+        }
+        @if (person.phoneNumbers && person.phoneNumbers.length > 0) {
+          <p class="_detail-label">Phones</p>
+          @for (phone of person.phoneNumbers; track phone.value) {
+            <p class="_detail-item">
+              <span class="_detail-type">{{ phone.type }}:</span>
+              {{ phone.value }}
+            </p>
+          }
+        }
+      </div>
+    </details>
+  }
+
+  @if (filteredConnections().length === 0) {
+    <p class="_status-container"><b>No contacts found</b></p>
+  }
+}

@@ -1,15 +1,71 @@
-@use '../../scss/common';
-@use '../../scss/message';
-@use '../../scss/data';
+/* People List Component — Sakura cards */
+._data-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  animation: fadeUp 0.5s var(--ease-smooth) both;
 
-:host {
-  @include common.layout-block();
+  li {
+    background: var(--glass-bg);
+    border: var(--border-indigo);
+    border-radius: var(--radius-card);
+    backdrop-filter: blur(10px);
+    transition: all var(--t-mid) var(--ease-smooth);
+
+    @for $i from 1 through 30 {
+      &:nth-child(#{$i}) { animation: cometSlide 0.4s var(--ease-smooth) #{$i * 0.04}s both; }
+    }
+
+    &:hover {
+      border-color: rgba(232,130,156,0.38);
+      box-shadow: var(--glow-sakura);
+      transform: translateY(-3px);
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 20px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+
+      &::before {
+        content: '🌸';
+        font-size: 0.9rem;
+        opacity: 0.7;
+        flex-shrink: 0;
+        transition: opacity var(--t-fast);
+      }
+
+      &:hover::before { opacity: 1; }
+    }
+  }
 }
 
 ._empty-message {
-  @include message.layout-message();
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 1rem;
+  padding: 48px 24px;
+  background: var(--glass-bg);
+  border: var(--border-dim);
+  border-radius: var(--radius-card);
+  font-style: italic;
+  &::before { content: '✦ '; color: var(--c-sakura); }
 }
 
-._data-list {
-  @include data.layout-data-list();
+._status-loading {
+  display: block;
+  text-align: center;
+  color: var(--c-indigo-light);
+  font-size: 0.95rem;
+  margin: 24px auto;
+  animation: twinkle 1.5s ease-in-out infinite;
 }

@@ -1,0 +1,39 @@
+/* Event Insert Page — Sakura form */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 80vh;
+  padding: 32px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  animation: fadeUp 0.5s var(--ease-smooth) both;
+}
+
+app-event-field-tree {
+  width: 100%;
+  max-width: 620px;
+  display: block;
+}
+
+._form-actions-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: var(--border-dim);
+}
+
+._form-errors {
+  width: 100%;
+  max-width: 620px;
+  margin-top: 14px;
+  padding: 14px 18px;
+  background: rgba(192,96,138,0.10);
+  border-left: 3px solid var(--c-sakura-deep);
+  border-radius: var(--radius-sm);
+  color: var(--c-sakura-light);
+  list-style: none;
+  font-size: 0.88rem;
+}

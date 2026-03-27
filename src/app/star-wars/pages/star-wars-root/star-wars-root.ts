@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { ModuleActivatedRoute } from '../../tokens';
+import { ModuleRoute } from '../../tokens';
 
 @Component({
   selector: 'app-star-wars-root',
@@ -10,7 +10,7 @@ import { ModuleActivatedRoute } from '../../tokens';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
-      provide: ModuleActivatedRoute,
+      provide: ModuleRoute,
       useFactory: () => inject(ActivatedRoute),
     },
   ],

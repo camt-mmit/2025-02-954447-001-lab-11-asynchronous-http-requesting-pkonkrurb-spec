@@ -1,26 +1,18 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { ModuleActivatedRoute } from '../../tokens';
-import { filmResource } from '../../helpers';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { filmResource } from '../../helpers/resources';
 import { FilmView } from '../../components/film-view/film-view';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-film-view-page',
+  standalone: true,
   imports: [FilmView],
-  templateUrl: './film-view-page.html',
-  styleUrl: './film-view-page.scss',
+  template: `
+    @if (film.isLoading()) { <p>Loading film...</p> }
+    @else if (film.value(); as data) { <app-film-view [data]="data" /> }
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilmViewPage {
   readonly id = input.required<string>();
-
-  protected moduleRoute = inject(ModuleActivatedRoute);
-
-  protected readonly resource = filmResource(this.id).asReadonly();
-
-  private readonly location = inject(Location);
-
-  protected goBack(): void {
-    this.location.back();
-  }
+  protected readonly film = filmResource(() => this.id());
 }

@@ -1,0 +1,190 @@
+/* People List Page (Google Contacts) — Sakura */
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 20px 48px;
+  background: transparent;
+  min-height: 100vh;
+  animation: fadeUp 0.5s var(--ease-smooth) both;
+}
+
+header {
+  width: 100%;
+  max-width: 640px;
+  margin-bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+._action-links {
+  list-style: none;
+  padding: 0; margin: 0;
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: linear-gradient(135deg, var(--c-sakura-deep), var(--c-sakura));
+    color: white;
+    padding: 9px 22px;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: var(--glow-sakura);
+    transition: all var(--t-mid) var(--ease-spring);
+    &:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(232,130,156,0.50); }
+  }
+}
+
+._search-fieldset {
+  display: flex;
+  align-items: center;
+  background: var(--glass-bg);
+  border: var(--border-sakura);
+  border-radius: var(--radius-pill);
+  padding: 6px 18px;
+  backdrop-filter: blur(12px);
+  transition: all var(--t-mid) var(--ease-smooth);
+
+  &:focus-within {
+    border-color: rgba(232,130,156,0.55);
+    box-shadow: 0 0 0 3px rgba(232,130,156,0.10), var(--glow-sakura);
+  }
+
+  input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    padding: 10px 8px;
+    outline: none;
+    &::placeholder { color: var(--text-dim); }
+  }
+
+  .app-cl-warn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    transition: color var(--t-fast);
+    &:hover { color: var(--c-sakura); }
+  }
+}
+
+/* ── Person accordion cards ── */
+._person-row {
+  width: 100%;
+  max-width: 640px;
+  background: var(--glass-bg);
+  border: var(--border-indigo);
+  border-radius: var(--radius-card);
+  margin-bottom: 10px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  transition: all var(--t-mid) var(--ease-smooth);
+  animation: cometSlide 0.35s var(--ease-smooth) both;
+
+  @for $i from 1 through 50 {
+    &:nth-child(#{$i}) { animation-delay: #{$i * 0.03}s; }
+  }
+
+  &[open] {
+    border-color: rgba(232,130,156,0.38);
+    box-shadow: var(--glow-sakura);
+  }
+}
+
+._person-summary {
+  list-style: none;
+  padding: 13px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  user-select: none;
+
+  &::-webkit-details-marker { display: none; }
+  &:hover { background: rgba(124,111,205,0.08); }
+}
+
+._avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(124,111,205,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2px solid rgba(232,130,156,0.28);
+  flex-shrink: 0;
+}
+
+._avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+._avatar-initials {
+  color: var(--c-sakura-light);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+._person-name {
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+._person-detail {
+  padding: 12px 18px 18px 74px;
+  border-top: var(--border-dim);
+  animation: fadeUp 0.25s var(--ease-smooth) both;
+}
+
+._detail-label {
+  color: var(--c-sakura-deep);
+  font-size: 0.70rem;
+  font-family: var(--font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  margin: 12px 0 5px 0;
+  font-weight: 700;
+}
+
+._detail-item {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 4px 0;
+  display: flex;
+  gap: 10px;
+}
+
+._detail-type {
+  color: var(--text-dim);
+  min-width: 55px;
+  font-size: 0.82rem;
+  text-transform: capitalize;
+}
+
+._status-container, ._error-container {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+._status-loading { color: var(--c-sakura-light); animation: twinkle 1.5s ease-in-out infinite; }

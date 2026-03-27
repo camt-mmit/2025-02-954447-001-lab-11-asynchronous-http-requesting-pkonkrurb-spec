@@ -1,5 +1,68 @@
-@use '../../scss/common';
+/* Star Wars Root — Sub Navigation */
 
-:host {
-  @include common.layout-block();
+.app-cmp-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  background: linear-gradient(135deg, rgba(22,18,46,0.90), rgba(31,25,66,0.85));
+  backdrop-filter: blur(16px);
+  border-bottom: var(--border-indigo);
+  padding: 0 24px;
+  margin: 0;
+  gap: 4px;
+  min-height: 56px;
+  position: relative;
+  font-family: var(--font-ui);
+
+  /* Petal shimmer line bottom */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent, var(--c-indigo), var(--c-sakura), var(--c-indigo), transparent
+    );
+    background-size: 200% 100%;
+    animation: auroraShimmer 6s ease-in-out infinite;
+    opacity: 0.50;
+  }
+
+  li {
+    margin: 0;
+
+    a {
+      text-decoration: none;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      font-size: 0.80rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      transition: all var(--t-mid) var(--ease-smooth);
+
+      i { font-size: 16px; }
+
+      &:hover {
+        color: var(--text-primary);
+        background: rgba(124,111,205,0.12);
+        border-color: rgba(124,111,205,0.25);
+        text-shadow: 0 0 9px rgba(197,184,255,0.55);
+      }
+    }
+
+    &.app-st-active a {
+      color: var(--c-violet-glow);
+      background: rgba(124,111,205,0.14);
+      border-color: rgba(124,111,205,0.38);
+      text-shadow: 0 0 12px rgba(197,184,255,0.65);
+      box-shadow: var(--glow-indigo);
+    }
+  }
 }

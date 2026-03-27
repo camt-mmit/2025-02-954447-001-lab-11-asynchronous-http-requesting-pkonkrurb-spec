@@ -1,55 +1,146 @@
-@use '../scss/common';
+/* ============================================================
+   APP ROOT — Sakura Meteor Shell
+   Nav bar + starfield + falling sakura petals
+   ============================================================ */
 
-:host {
-  @layer {
-    & {
-      --_max-width: 640px;
-      --_gap: 8px;
-      --_logo-height: 64px;
-    }
-  }
-
-  @include common.layout-block();
-
-  padding-bottom: var(--_gap);
-}
-
-.-cmp-main-content {
-  @include common.layout-block();
-
-  width: min(var(--_max-width), 100%);
-
-  margin-left: auto;
-  margin-right: auto;
-}
-
-header {
-  @include common.layout-block();
-
+.left-side {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  row-gap: var(--_gap);
-
-  padding-top: var(--_gap);
-
-  h1 {
-    margin: 0px;
-  }
-
-  .angular-logo {
-    max-height: var(--_logo-height);
-  }
-}
-
-.-cmp-title {
-  @include common.layout-block();
-
-  width: 100%;
-
-  display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
-  column-gap: var(--_gap);
+  background: linear-gradient(
+    135deg,
+    rgba(14,12,30,0.96) 0%,
+    rgba(22,18,46,0.92) 50%,
+    rgba(31,25,66,0.90) 100%
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(232,130,156,0.20);
+  padding: 0 28px;
+  min-height: 68px;
+  overflow: visible;
+  z-index: 100;
+
+  /* Aurora line at top */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--c-indigo)     15%,
+      var(--c-sakura)     35%,
+      var(--c-violet-glow) 50%,
+      var(--c-sakura)     65%,
+      var(--c-indigo)     85%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: auroraShimmer 5s ease-in-out infinite;
+    opacity: 0.75;
+  }
+
+  /* Shooting-star decoration */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: -15%;
+    width: 180px;
+    height: 1.5px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--c-sakura-light),
+      var(--c-violet-glow),
+      transparent
+    );
+    border-radius: 999px;
+    animation: meteorFall 7s ease-in-out infinite;
+    animation-delay: 1.5s;
+    opacity: 0;
+    filter: blur(0.4px);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    background: linear-gradient(135deg, var(--c-sakura-light), var(--c-violet-glow), var(--c-comet));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: none;
+    text-shadow: none;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  li {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-family: var(--font-ui);
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      padding: 9px 22px;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      transition: all var(--t-mid) var(--ease-smooth);
+      position: relative;
+      overflow: hidden;
+
+      /* Shimmer sweep on hover */
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.07) 50%, transparent 70%);
+        transform: translateX(-100%);
+        transition: transform 0.55s ease;
+      }
+
+      i {
+        font-size: 18px;
+        color: var(--c-sakura);
+      }
+
+      &:hover {
+        color: var(--text-primary);
+        background: var(--glass-hover);
+        border-color: rgba(232,130,156,0.28);
+        text-shadow: 0 0 10px rgba(232,130,156,0.50);
+        transform: translateY(-1px);
+
+        &::before { transform: translateX(100%); }
+        i { color: var(--c-violet-glow); }
+      }
+
+      &.is-active,
+      &[aria-current="page"] {
+        color: var(--c-sakura-light);
+        background: rgba(232,130,156,0.12);
+        border-color: rgba(232,130,156,0.38);
+        text-shadow: 0 0 12px rgba(232,130,156,0.65);
+        box-shadow: var(--glow-sakura);
+      }
+    }
+  }
+}
+
+router-outlet + * {
+  animation: fadeUp 0.5s var(--ease-smooth) both;
 }

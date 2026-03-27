@@ -1,19 +1,105 @@
-@use '../../scss/page';
-@use '../../scss//message';
-@use '../../scss/status';
-
-:host {
-  @include page.set-host-header();
+/* Films List Page — Sakura Meteor */
+header, app-films-list {
+  max-width: 960px;
+  margin-inline: auto;
+  width: 95%;
 }
 
-._search-fieldset {
-  @include page.set-search-fieldset();
+header {
+  margin-top: 36px;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeUp 0.5s var(--ease-smooth) both;
+
+  form fieldset {
+    display: flex;
+    align-items: center;
+    background: var(--glass-bg);
+    border: var(--border-sakura);
+    border-radius: var(--radius-pill);
+    padding: 6px 20px;
+    backdrop-filter: blur(12px);
+    transition: all var(--t-mid) var(--ease-smooth);
+
+    &:focus-within {
+      border-color: rgba(197,184,255,0.55);
+      box-shadow: 0 0 0 3px rgba(124,111,205,0.12), var(--glow-indigo);
+    }
+
+    input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      padding: 10px 8px;
+      text-shadow: none;
+      &::placeholder { color: var(--text-dim); font-style: italic; }
+    }
+
+    button {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      transition: all var(--t-fast);
+      &:hover { color: var(--c-sakura); transform: scale(1.15); }
+    }
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: var(--glass-bg);
+    border: var(--border-indigo);
+    border-radius: var(--radius-card);
+    backdrop-filter: blur(12px);
+
+    span {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      b { color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; }
+      span:not([class]) { color: var(--c-violet-glow); font-weight: 700; margin-left: 4px; text-shadow: 0 0 8px rgba(197,184,255,0.5); }
+    }
+
+    ul {
+      display: flex;
+      list-style: none;
+      gap: 16px;
+      padding: 0; margin: 0;
+
+      li a {
+        color: var(--c-indigo-light);
+        text-decoration: none;
+        font-size: 1.6rem;
+        font-weight: 700;
+        transition: all var(--t-mid) var(--ease-spring);
+
+        &:hover:not([routerLink="null"]) {
+          color: var(--c-sakura-light);
+          transform: scale(1.25);
+          text-shadow: var(--glow-sakura);
+        }
+
+        &[routerLink="null"] { opacity: 0.2; cursor: not-allowed; }
+      }
+    }
+  }
 }
 
-._page-navigation {
-  @include page.set-navigation();
-}
-
-._error-message {
-  @include message.layout-message();
+p {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 40px;
+  font-style: italic;
 }

@@ -1,11 +1,18 @@
-@if (data().length > 0) {
-  <ul class="_data-list">
-    @for (item of data(); track item) {
-      <li>
-        <a [routerLink]="item.url | extractId">{{ item.title }}</a>
-      </li>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Episode ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (film of data(); track film.url) {
+      <tr>
+        <td>
+          <a [routerLink]="[film.url | extractId]">{{ film.title }}</a>
+        </td>
+        <td>{{ film.episode_id }}</td>
+      </tr>
     }
-  </ul>
-} @else {
-  <p class="_empty-message">Not Found!!</p>
-}
+  </tbody>
+</table>

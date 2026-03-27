@@ -11,17 +11,17 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "experimentalDecorators": true,
-    "exactOptionalPropertyTypes": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    "exactOptionalPropertyTypes": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictStandalone": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "strictStandalone": true
   },
   "files": [],
   "references": [

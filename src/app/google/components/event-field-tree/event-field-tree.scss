@@ -1,0 +1,121 @@
+/* Event Field Tree — Sakura form fields */
+fieldset {
+  border: var(--border-indigo);
+  border-radius: var(--radius-card);
+  padding: 22px 24px;
+  margin-bottom: 16px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  color: var(--text-primary);
+  animation: fadeUp 0.4s var(--ease-smooth) both;
+}
+
+legend {
+  color: var(--c-sakura-light);
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  padding: 0 10px;
+  font-size: 1.05rem;
+}
+
+._data-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+label b {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="datetime-local"],
+textarea {
+  background: rgba(14,12,30,0.55);
+  border: var(--border-dim);
+  border-radius: var(--radius-sm);
+  padding: 10px 13px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  outline: none;
+  transition: all var(--t-fast) var(--ease-smooth);
+  color-scheme: dark;
+
+  &:focus {
+    border-color: rgba(232,130,156,0.50);
+    box-shadow: 0 0 0 3px rgba(232,130,156,0.10);
+    background: rgba(22,18,46,0.65);
+  }
+
+  &::placeholder { color: var(--text-dim); }
+}
+
+input[type="checkbox"] {
+  accent-color: var(--c-sakura);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+fieldset._data-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  border: 1px solid rgba(124,111,205,0.20);
+  background: rgba(14,12,30,0.30);
+}
+
+fieldset._data-form legend label {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+button {
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: none;
+  transition: all var(--t-fast) var(--ease-smooth);
+}
+
+button[type="submit"], .app-cl-primary {
+  background: linear-gradient(135deg, var(--c-sakura-deep), var(--c-sakura));
+  color: white;
+  box-shadow: var(--glow-sakura);
+  &:hover { transform: translateY(-1px); box-shadow: 0 5px 18px rgba(232,130,156,0.45); }
+}
+
+button[type="button"] {
+  background: transparent;
+  border: var(--border-dim);
+  color: var(--text-muted);
+  &:hover { background: var(--glass-hover); color: var(--text-primary); }
+}
+
+button:disabled {
+  background: rgba(124,111,205,0.10);
+  color: var(--text-dim);
+  cursor: not-allowed;
+  box-shadow: none;
+}

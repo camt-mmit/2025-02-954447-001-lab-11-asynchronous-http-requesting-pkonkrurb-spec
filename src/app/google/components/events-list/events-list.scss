@@ -1,0 +1,59 @@
+/* Events List — Sakura */
+* { color: var(--text-primary); }
+
+._data-list, ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li {
+    background: var(--glass-bg);
+    border: var(--border-indigo);
+    border-radius: var(--radius-card);
+    backdrop-filter: blur(10px);
+    transition: all var(--t-mid) var(--ease-smooth);
+    animation: cometSlide 0.35s var(--ease-smooth) both;
+
+    @for $i from 1 through 30 {
+      &:nth-child(#{$i}) { animation-delay: #{$i * 0.04}s; }
+    }
+
+    &:hover {
+      border-color: rgba(232,130,156,0.35);
+      box-shadow: var(--glow-sakura);
+      transform: translateX(4px);
+    }
+  }
+}
+
+._details {
+  & > summary {
+    padding: 14px 18px;
+    cursor: pointer;
+    list-style: none;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    &::-webkit-details-marker { display: none; }
+    &::before { content: '🌸 '; font-size: 0.85rem; }
+    small { color: var(--text-muted); font-size: 0.78rem; }
+  }
+
+  & > dl {
+    padding: 12px 18px 16px;
+    border-top: var(--border-dim);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    dt { font-weight: 700; color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    dd { color: var(--text-secondary); font-size: 0.9rem; text-align: justify; white-space: pre-wrap; }
+  }
+}

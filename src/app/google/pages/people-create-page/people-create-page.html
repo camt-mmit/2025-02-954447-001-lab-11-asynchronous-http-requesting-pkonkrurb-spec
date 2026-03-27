@@ -1,0 +1,123 @@
+<form (submit)="$event.preventDefault()" (submit)="save()">
+  <fieldset [disabled]="fieldTree().disabled()">
+    <div class="_field-row">
+      <label for="givenName" class="_field-label"
+        >Given Name <span class="_required">*</span></label
+      >
+      <input id="givenName" type="text" [formField]="fieldTree.givenName" placeholder="" />
+    </div>
+
+    <div class="_field-row">
+      <label for="familyName" class="_field-label">Family Name</label>
+      <input id="familyName" type="text" [formField]="fieldTree.familyName" placeholder="" />
+    </div>
+
+    <!-- Email section -->
+    <div class="_section-header">
+      <button type="button" class="app-cmp-button app-cl-filled _add-btn" (click)="addEmail()">
+        <i class="material-symbols-outlined">add</i>
+        Email
+      </button>
+    </div>
+
+    @for (email of emails(); track $index) {
+      <div class="_entry-row">
+        <div class="_entry-fields">
+          <div class="_field-group">
+            <label [attr.for]="'emailType_' + $index" class="_field-label"
+              >Type <span class="_required">*</span></label
+            >
+            <input
+              [id]="'emailType_' + $index"
+              type="text"
+              class="_type-input"
+              [value]="email.type"
+              (input)="updateEmail($index, 'type', $any($event.target).value)"
+            />
+          </div>
+
+          <div class="_field-group _flex-grow">
+    <label [attr.for]="'emailValue_' + $index" class="_field-label">Email <span class="_required">*</span></label>
+    <input
+        [id]="'emailValue_' + $index"
+        type="email"
+        [value]="email.value"
+        (input)="updateEmail($index, 'value', $any($event.target).value)"
+        placeholder=""
+    />
+</div>
+        </div>
+        <button
+          type="button"
+          class="app-cmp-button app-cl-warn _remove-btn"
+          (click)="removeEmail($index)"
+        >
+          <i class="material-symbols-outlined">delete</i>
+        </button>
+      </div>
+    }
+
+    <!-- Phone section -->
+    <div class="_section-header">
+      <button type="button" class="app-cmp-button app-cl-filled _add-btn" (click)="addPhone()">
+        <i class="material-symbols-outlined">add</i>
+        Phone Number
+      </button>
+    </div>
+
+    @for (phone of phones(); track $index) {
+      <div class="_entry-row">
+        <div class="_entry-fields">
+          <div class="_field-group">
+    <label [attr.for]="'phoneType_' + $index" class="_field-label">Type <span class="_required">*</span></label>
+    <input
+        [id]="'phoneType_' + $index"
+        type="text"
+        class="_type-input"
+        [value]="phone.type"
+        (input)="updatePhone($index, 'type', $any($event.target).value)"
+        placeholder="e.g., home"
+    />
+</div>
+       <div class="_field-group _flex-grow">
+    <label [attr.for]="'phoneValue_' + $index" class="_field-label">Phone <span class="_required">*</span></label>
+    <input
+        [id]="'phoneValue_' + $index"
+        type="tel"
+        [value]="phone.value"
+        (input)="updatePhone($index, 'value', $any($event.target).value)"
+        placeholder=""
+    />
+</div>
+        </div>
+        <button
+          type="button"
+          class="app-cmp-button app-cl-warn _remove-btn"
+          (click)="removePhone($index)"
+        >
+          <i class="material-symbols-outlined">delete</i>
+        </button>
+      </div>
+    }
+
+    <!-- Actions -->
+    <div class="_form-actions-bar">
+      <button type="submit" class="app-cmp-button app-cl-filled">
+        <i class="material-symbols-outlined">save</i>
+        Save
+      </button>
+      <button type="button" class="app-cmp-button app-cl-warn" (click)="cancel()">
+        <i class="material-symbols-outlined">cancel</i>
+        Cancel
+      </button>
+    </div>
+
+    @if (fieldTree().errors(); as errors) {
+      <ul role="list" class="_form-errors">
+        @for (error of errors; track error) {
+          <li>{{ error.message ?? error.kind }}</li>
+        }
+      </ul>
+    }
+  </fieldset>
+</form>
